@@ -5,7 +5,6 @@ SHELL [ "/bin/bash" , "-c" ]
 # Set environment variables and suppress additional permissions while installing packages
 ENV DEBIAN_FRONTEND=noninteractive
 
-
 # Install general Ubuntu tools and ROS-related packages
 RUN apt-get update && apt-get install -y \
     # General Ubuntu tools. Add more tools as required
@@ -14,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     nano \
     gedit \
     git \
-    # ROS related packages. Add more as required
+    # ROS-related packages. Add more as required
     ros-humble-rqt \
     ros-humble-tf2-tools \
     ros-humble-turtlesim \
@@ -24,18 +23,14 @@ RUN apt-get update && apt-get install -y \
     ros-humble-turtlebot4-desktop \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-
-RUN apt-get clean all
-# Install Git
-RUN apt-get update && apt-get install -y git
-
 # Add a function to .bashrc to set up the ROS Humble environment
 RUN echo 'source /opt/ros/humble/setup.bash' >> /root/.bashrc && \
     echo 'export TURTLEBOT3_MODEL=waffle_pi' >> /root/.bashrc
+
 # Setup a localhost variable
 RUN echo 'export ROS_LOCALHOST_ONLY=1' >> /root/.bashrc
 
-
+# Source ROS humble
 RUN source /opt/ros/humble/setup.bash && \
     mkdir -p /humble_ws/src 
 
