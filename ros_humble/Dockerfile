@@ -13,9 +13,7 @@ RUN apt-get update && apt-get install -y \
     terminator \
     nano \
     gedit \
-    code \
     git \
-
     # ROS related packages. Add more as required
     ros-humble-rqt \
     ros-humble-tf2-tools \
@@ -31,21 +29,18 @@ RUN apt-get clean all
 # Install Git
 RUN apt-get update && apt-get install -y git
 
-RUN source /opt/ros/humble/setup.bash && \
-    mkdir -p /humble_ws/src 
-
 # Add a function to .bashrc to set up the ROS Humble environment
-RUN echo 'humble() {' >> /root/.bashrc && \
-    echo '    source /opt/ros/humble/setup.bash' >> /root/.bashrc && \
-    echo '    export TURTLEBOT3_MODEL=waffle_pi' >> /root/.bashrc && \
-    echo '}' >> /root/.bashrc && \
-    echo 'humble' >> /root/.bashrc 
-
+RUN echo 'source /opt/ros/humble/setup.bash' >> /root/.bashrc && \
+    echo 'export TURTLEBOT3_MODEL=waffle_pi' >> /root/.bashrc
 # Setup a localhost variable
 RUN echo 'export ROS_LOCALHOST_ONLY=1' >> /root/.bashrc
 
+
+RUN source /opt/ros/humble/setup.bash && \
+    mkdir -p /humble_ws/src 
+
 # Set the working folder at startup
-WORKDIR /home
+WORKDIR /humble_ws
 
 # Default command to run when the container starts
 CMD ["bash"]
