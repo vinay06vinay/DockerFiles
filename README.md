@@ -22,7 +22,7 @@ cd ros_humble
 5. Build the docker image using below command in terminal 
 ```
 # This command uses the docker file in your directory and builds an image with name humble
-docker build . -t humble
+docker build -t humble .
 ```
 6. Once the docker image is built, check the image by using below command
 ```
